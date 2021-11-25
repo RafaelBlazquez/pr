@@ -1,6 +1,7 @@
 <?php
     
     function anadirReciente($reciente){
+        if(!isset($_SESSION['usuario'])){
         session_start();
         if(!isset($_SESSION['recientes'])){
             $arrayRecientes= array($reciente);
@@ -14,5 +15,6 @@
         }
         $stringRecientes = implode(",",$arrayRecientes);
         $_SESSION['recientes'] =$stringRecientes;
+        }
     }
 ?>
