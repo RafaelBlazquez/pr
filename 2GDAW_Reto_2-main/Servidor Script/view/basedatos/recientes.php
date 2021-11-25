@@ -13,6 +13,6 @@
             array_unshift($arrayRecientes,$reciente);
         }
         $stringRecientes = implode(",",$arrayRecientes);
-            setcookie("recientes",$stringRecientes);
+        $_SESSION['recientes'] =$stringRecientes;
     }
 ?>
