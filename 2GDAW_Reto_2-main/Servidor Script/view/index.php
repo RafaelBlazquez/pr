@@ -7,11 +7,11 @@
         <div id="contenedor">
 
             <?php
-
-                if(isset($_COOKIE['recientes'])){
+                session_start();
+                if(isset($_SESSION['recientes'])){
                     echo "<section>";
                     echo "<a class=\"titulo\"> De inter&eacute;s</a>";
-                    $arrayRecientes= explode(",",$_COOKIE['recientes']);
+                    $arrayRecientes= explode(",",$_SESSION['recientes']);
                     for($i= 0; $i<count($arrayRecientes)&& $i<5; $i++){
                         $posicion = fswitch($i);
                         echo"<a href=\"anuncios.php?anun=$arrayRecientes[$i]\"class=\"anuncio $posicion\">$arrayRecientes[$i]</a>";

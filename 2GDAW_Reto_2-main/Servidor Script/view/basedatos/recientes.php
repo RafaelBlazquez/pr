@@ -1,11 +1,12 @@
 <?php
     
     function anadirReciente($reciente){
-        if(!isset($_COOKIE['recientes'])){
+        session_start();
+        if(!isset($_SESSION['recientes'])){
             $arrayRecientes= array($reciente);
         }
         else{
-            $arrayRecientes= explode(",",$_COOKIE['recientes']);
+            $arrayRecientes= explode(",",$_SESSION['recientes']);
             if(($posicion = array_search($reciente, $arrayRecientes)) !== false){
                 unset($arrayRecientes[$posicion]);
             }
