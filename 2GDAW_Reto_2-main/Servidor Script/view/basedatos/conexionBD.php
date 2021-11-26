@@ -170,7 +170,20 @@ function selectPorPopularidad($baseDatos) {
     //echo count($ret);
     return $ret;
 }
+function selectPorFavoritos($baseDatos, $idUsuario) {
+    $statement = $baseDatos->prepare("SELECT idAnun FROM destacados WHERE idCli = \"$idUsuario\"");
+    $statement->execute();
+    $favs = array();
+    $cont = 0;
+    while($row = $statement->fetch()) {
+        if ($cont < 5) {
+        array_push($favs, $row["idAnun"]);
+    }
+        $cont ++;
+    }
+    return($favs);
 
+}
 
 function fswitch($i){
     switch($i){
@@ -220,5 +233,40 @@ function seccionPopular($baseDatos) {
             echo"<a href=\"anuncios.php?anun=$arrayAnun[$j]\"class=\"anuncio $posicion\">$arrayAnun[$j]</a>";
     
         }
-    echo "<a class=\"titulo\">Productos populares</a></section>";
+    echo "<a class=\"titulo\">Populares</a></section>";
+}
+
+function idUsuario2($baseDatos,$usuarioNombre){
+        $statement = $baseDatos->query("SELECT id FROM usuarios WHERE nomUsuario = '$usuarioNombre'");
+        while($row = $statement->fetch()){
+            $idUsuario= $row["id"];
+            return $idUsuario;
+        } 
+}
+
+function nombreAnuncio($baseDatos,$idAnun){
+    $statement = $baseDatos->query("SELECT nombre FROM anuncios WHERE id = '$idAnun'");
+    while($row = $statement->fetch()){
+        $nombreAnuncio= $row["nombre"];
+        return $nombreAnuncio;
+    } 
+}
+
+function seccionFavoritos($baseDatos,$nombreUsuario) {
+    echo "<section>";
+        $idUsuario = idUsuario2($baseDatos,$nombreUsuario);
+        
+        $arrayAnun = selectPorFavoritos($baseDatos,$idUsuario);
+        if (count($arrayAnun)!=0){
+        for($j= 0; $j<count($arrayAnun); $j++){
+            $posicion = fswitch($j);
+            $nombreAnuncio = nombreAnuncio($baseDatos,$arrayAnun[$j]);
+            echo"<a href=\"anuncios.php?anun=$nombreAnuncio\"class=\"anuncio $posicion\">$nombreAnuncio</a>";
+        }
+
+        }else{
+             echo"<a class=\"anuncio primero\">Aún no hay favoritos</a>";
+
+    }
+   echo "<a class=\"titulo\">Favoritos</a></section>";
 }
