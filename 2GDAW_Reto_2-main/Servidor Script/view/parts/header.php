@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <div id="logo"><img src="imagenes/iconos/comerciados.png"></div>
+        <div id="logo"><a href="index.php"><img src="imagenes/iconos/comerciados.png"></a></div>
         <h1><a href="index.php">ComerciaDos</a></h1>
         <nav>
             
